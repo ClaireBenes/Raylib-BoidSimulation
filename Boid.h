@@ -16,12 +16,14 @@ public:
 	void Draw();
 
 	Vector2 Normalized(Vector2 vec2);
+	Vector2 Distance(Boid* boid);
+	float DistanceSqrt(const Vector2& a, const Vector2& b);
 
 	//Vector2 AvoidObstacles(std::vector<Obstacles> obstacle);
 
 private:
 	float id = 0;
-	float speed = 40;
+	float speed = 70;
 	float rotation = 10;
 	float size = 20;
 	Vector2 position = { 10,10 };

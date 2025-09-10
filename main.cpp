@@ -38,9 +38,9 @@ int main() {
 
 void InitSimulation()
 {
-    for (int i = 0; i < 20; i++) 
+    for (int i = 0; i < 50; i++) 
     {
-        Boid* newBoid = new Boid(i, GetRandomValue(10, 1080), GetRandomValue(10, 720), GetRandomValue(0, 360));
+        Boid* newBoid = new Boid(i, GetRandomValue(100, 1080 - 100), GetRandomValue(100, 720 - 100), GetRandomValue(0, 360));
         boids.push_back(newBoid);
     }
 }
