@@ -1,8 +1,18 @@
 ﻿  Boid.cpp
-C:\Users\claire.benes\Documents\GitHub\BoidSimulation\Boid.cpp(23,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\claire.benes\Documents\GitHub\BoidSimulation\Boid.cpp(102,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\claire.benes\Documents\GitHub\BoidSimulation\Boid.cpp(103,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\claire.benes\Documents\GitHub\BoidSimulation\Boid.cpp(121,13): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+C:\Users\claire.benes\Documents\GitHub\BoidSimulation\Boid.cpp(5,21): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\claire.benes\Documents\GitHub\BoidSimulation\Boid.cpp(6,21): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\claire.benes\Documents\GitHub\BoidSimulation\Boid.cpp(15,22): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\claire.benes\Documents\GitHub\BoidSimulation\Boid.cpp(16,23): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\claire.benes\Documents\GitHub\BoidSimulation\Boid.cpp(35,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\claire.benes\Documents\GitHub\BoidSimulation\Boid.cpp(125,89): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+C:\Users\claire.benes\Documents\GitHub\BoidSimulation\Boid.cpp(126,89): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+C:\Users\claire.benes\Documents\GitHub\BoidSimulation\Boid.cpp(130,18): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\claire.benes\Documents\GitHub\BoidSimulation\Boid.cpp(134,19): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\claire.benes\Documents\GitHub\BoidSimulation\Boid.cpp(146,29): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\claire.benes\Documents\GitHub\BoidSimulation\Boid.cpp(147,29): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\claire.benes\Documents\GitHub\BoidSimulation\Boid.cpp(164,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\claire.benes\Documents\GitHub\BoidSimulation\Boid.cpp(165,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\claire.benes\Documents\GitHub\BoidSimulation\Boid.cpp(183,13): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
   main.cpp
 C:\Users\claire.benes\Documents\GitHub\BoidSimulation\main.cpp(43,116): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\Users\claire.benes\Documents\GitHub\BoidSimulation\main.cpp(43,84): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data

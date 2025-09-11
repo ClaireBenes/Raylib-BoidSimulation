@@ -13,16 +13,14 @@ void Draw();
 void EndScene();
 
 int main() { 
-    cout << "Hello World" << endl;
-
-    InitWindow(1080, 720, "My first Raylib window!");
+    InitWindow(1920, 1080, "ALL BOIDS");
     SetTargetFPS(60);
 
     InitSimulation();
 
     while (!WindowShouldClose()) {
         BeginDrawing();
-        ClearBackground(BLUE);
+        ClearBackground(BLACK);
 
         Update();
         Draw();
@@ -38,9 +36,11 @@ int main() {
 
 void InitSimulation()
 {
+    Texture tex = LoadTexture("resources/WhiteFish.png");
+
     for (int i = 0; i < 50; i++) 
     {
-        Boid* newBoid = new Boid(i, GetRandomValue(100, 1080 - 100), GetRandomValue(100, 720 - 100), GetRandomValue(0, 360));
+        Boid* newBoid = new Boid(i, GetRandomValue(100, 1080 - 100), GetRandomValue(100, 720 - 100), GetRandomValue(0, 360), tex);
         boids.push_back(newBoid);
     }
 }
