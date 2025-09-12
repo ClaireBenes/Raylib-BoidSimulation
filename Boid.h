@@ -3,10 +3,12 @@
 #include "raylib.h"
 #include <vector>
 
+class Obstacles;
+
 class Boid
 {
 public:
-	Boid(float id, float posX, float poY, float rotation, Texture texture);
+	Boid(float id, float posX, float poY, float rotation, Texture texture, Color color);
 	~Boid();
 
 	Vector2 Separates(std::vector<Boid*>& other);
@@ -14,8 +16,9 @@ public:
 	Vector2 Group(std::vector<Boid*>& other);
 
 	Vector2 KeepWithinBorder();
+	Vector2 AvoidObstacles(std::vector<Obstacles*>& obstacles);
 
-	void Move(std::vector<Boid*>& other);
+	void Move(std::vector<Boid*>& other, std::vector<Obstacles*>& obstacles);
 	void Draw();
 
 	Vector2 Normalized(Vector2 vec2);
@@ -24,18 +27,20 @@ public:
 	float DistanceSqrt(const Vector2& a, const Vector2& b);
 	float Clamp(float& angle);
 
-	//Vector2 AvoidObstacles(std::vector<Obstacles> obstacle);
-
 private:
+	//Fish Info
 	float id = 0;
-	float speed = 300;
+	float speed = 250;
 	float rotation = 10;
 	float size = 25;
 	Vector2 position = { 10,10 };
 	Vector2 velocity = { 0,0 };
 
-	Rectangle fishImage{ position.x,position.y, 10, 10 };
-
+	Color color = Color{ (unsigned char) GetRandomValue(0, 255), (unsigned char) GetRandomValue(0, 255), (unsigned char) GetRandomValue(0, 255), 255 };
 	Texture fishTexture;
+
+	//Boid Info
+	float maxDistance = 40;
+	float maxSteer = 20;
 };
 

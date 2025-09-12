@@ -1,15 +1,15 @@
 #include "Boid.h"
 
-Boid::Boid(float id, float x, float y, float rotation, Texture texture)
-{
-	velocity.x = speed * cos(rotation);
-	velocity.y = speed * sin(rotation);
+#include "Obstacles.h"
 
+Boid::Boid(float id, float x, float y, float rotation, Texture texture, Color color)
+{
 	this->id = id;
 	position.x = x;
 	position.y = y;
 
 	this->rotation = rotation;
+	this->color = color;
 
 	fishTexture = texture;
 	fishTexture.width = size;
@@ -34,7 +34,7 @@ Vector2 Boid::Separates(std::vector<Boid*>& other)
 		Vector2 dist = Distance(other[i]);
 		float distanceSqrt = sqrt(dist.x * dist.x + dist.y * dist.y);
 
-		if (distanceSqrt < 50)
+		if (distanceSqrt < maxDistance)
 		{ 
 			alldistance.x -= dist.x;
 			alldistance.y -= dist.y;
@@ -113,17 +113,52 @@ Vector2 Boid::KeepWithinBorder()
 	if (position.y > 720 - 100) {
 		newPos.y = -40;
 	}
-	else if (position.y < 0 + 100) {
+	else if (position.y < 0 + 200) {
 		newPos.y = 40;
 	}
 
 	return newPos;
 }
 
-void Boid::Move(std::vector<Boid*>& other)
+Vector2 Boid::AvoidObstacles(std::vector<Obstacles*>& obstacles)
 {
-	velocity.x += (Separates(other).x * 0.8 + KeepWithinBorder().x * 0.2) + Group(other).x + Align(other).x;
-	velocity.y += (Separates(other).y * 0.8 + KeepWithinBorder().y * 0.2) + Group(other).y + Align(other).y;
+	Vector2 newPos = { 0, 0 };
+	float minDist = speed * speed * 0.8;
+
+	for( int i = 0; i < obstacles.size(); i++ )
+	{
+		Vector2 diff = { position.x - obstacles[i]->GetPos().x, position.y - obstacles[i]->GetPos().y };
+
+		float distSqrt = diff.x * diff.x + diff.y * diff.y;
+
+		if( distSqrt  < minDist - obstacles[i]->GetHeight() * 0.5 && distSqrt > FLT_EPSILON )
+		{
+			if( position.x < obstacles[i]->GetPos().x - obstacles[i]->GetWidth() * 0.5 )
+			{
+				newPos.x -= 400;
+			}
+			else if( position.x > obstacles[i]->GetPos().x + obstacles[i]->GetWidth() * 0.5 )
+			{
+				newPos.x += 400;
+			}
+			if( position.y < obstacles[i]->GetPos().y - obstacles[i]->GetHeight() * 0.5 )
+			{
+				newPos.y -= 400;
+			}
+			else if( position.y > obstacles[i]->GetPos().y + obstacles[i]->GetHeight() * 0.5 )
+			{
+				newPos.y += 400;
+			}
+		}		
+	}
+
+	return newPos;
+}
+
+void Boid::Move(std::vector<Boid*>& other, std::vector<Obstacles*>& obstacles)
+{
+	velocity.x += (Separates(other).x * 0.8 + KeepWithinBorder().x * 0.2 + AvoidObstacles(obstacles).x * 1.5) + Group(other).x + Align(other).x;
+	velocity.y += (Separates(other).y * 0.8 + KeepWithinBorder().y * 0.2 + AvoidObstacles(obstacles).y * 1.5) + Group(other).y + Align(other).y;
 
 	Vector2 normVelocity = Normalized(velocity);
 
@@ -131,7 +166,7 @@ void Boid::Move(std::vector<Boid*>& other)
 	float angleDiff = targetRot - rotation;
 	Clamp(angleDiff);
 
-	float turnFactor = 0.05;
+	float turnFactor = maxSteer * (1/speed);
 	if (angleDiff > turnFactor) 
 	{
 		angleDiff = turnFactor;
@@ -153,7 +188,7 @@ void Boid::Move(std::vector<Boid*>& other)
 void Boid::Draw()
 {
 	float origin = size / 2;
-	DrawTexturePro(fishTexture, { 0,0,(float)fishTexture.width, (float)fishTexture.height }, { position.x,position.y, size, size }, { origin,origin }, rotation * RAD2DEG + 180, WHITE);
+	DrawTexturePro(fishTexture, { 0,0,(float)fishTexture.width, (float)fishTexture.height }, { position.x,position.y, size, size }, { origin,origin }, rotation * RAD2DEG + 180, color);
 }
 
 Vector2 Boid::Normalized(Vector2 vec2)
