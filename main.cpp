@@ -39,18 +39,20 @@ int main() {
 
 void InitSimulation()
 {
-    Obstacles* newObstacle = new Obstacles(500, 500, 200, 300);
+    //Obstacles
+    Obstacles* newObstacle = new Obstacles(500, 700, 200, 300, false);
     allObstacles.push_back(newObstacle);
 
-    Obstacles* newObstacle2 = new Obstacles(1000, 800, 100, 50);
+    Obstacles* newObstacle2 = new Obstacles(1300, 300, 100, 100, false);
     allObstacles.push_back(newObstacle2);
 
-    Obstacles* newObstacle3 = new Obstacles(1400, 300, 300, 200);
-    allObstacles.push_back(newObstacle3);
+    Obstacles* mouseObstacle = new Obstacles(10, 10, 30, 50, true);
+    allObstacles.push_back(mouseObstacle);
 
+    //Fish
     Texture tex = LoadTexture("resources/WhiteFish.png");
 
-    for( int i = 0; i < 8; i++ )
+    for( int i = 0; i < 10; i++ )
     {
         std::vector<Boid*> boidGroup;
 
@@ -67,6 +69,11 @@ void InitSimulation()
 
 void Update() 
 {
+    for( int i = 0; i < allObstacles.size(); i++ )
+    {
+        allObstacles[i]->Update();
+    }
+
     for( int i = 0; i < allBoids.size(); i++ )
     {
         for( int j = 0; j < allBoids[i].size(); j++ )
@@ -78,17 +85,17 @@ void Update()
 
 void Draw() 
 {
-    for( int i = 0; i < allObstacles.size(); i++ )
-    {
-        allObstacles[i]->Draw();
-    }
-
     for( int i = 0; i < allBoids.size(); i++ )
     {
         for( int j = 0; j < allBoids[i].size(); j++ )
         {
             allBoids[i][j]->Draw();
         }
+    }
+
+    for( int i = 0; i < allObstacles.size(); i++ )
+    {
+        allObstacles[i]->Draw();
     }
 }
 

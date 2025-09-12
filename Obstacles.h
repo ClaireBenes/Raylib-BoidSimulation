@@ -5,9 +5,10 @@
 class Obstacles
 {
 public:
-	Obstacles(float posX, float posY, float width, float height);
+	Obstacles(float posX, float posY, float width, float height, bool useMouse);
 
 	void Draw();
+	void Update();
 
 	Vector2 GetPos();
 	float GetWidth();
@@ -17,5 +18,7 @@ private:
 	Vector2 position = { 100, 100 };
 	float width = 200;
 	float height = 300;
+
+	bool isMouse = false;
 };
 

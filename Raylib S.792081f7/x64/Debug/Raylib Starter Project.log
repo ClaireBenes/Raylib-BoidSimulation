@@ -1,14 +1,6 @@
-﻿  Boid.cpp
-C:\Users\claire.benes\Documents\GitHub\BoidSimulation\Boid.cpp(15,22): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\claire.benes\Documents\GitHub\BoidSimulation\Boid.cpp(16,23): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\claire.benes\Documents\GitHub\BoidSimulation\Boid.cpp(35,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\claire.benes\Documents\GitHub\BoidSimulation\Boid.cpp(126,16): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\claire.benes\Documents\GitHub\BoidSimulation\Boid.cpp(160,125): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-C:\Users\claire.benes\Documents\GitHub\BoidSimulation\Boid.cpp(161,125): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-C:\Users\claire.benes\Documents\GitHub\BoidSimulation\Boid.cpp(165,18): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\claire.benes\Documents\GitHub\BoidSimulation\Boid.cpp(181,29): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\claire.benes\Documents\GitHub\BoidSimulation\Boid.cpp(182,29): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\claire.benes\Documents\GitHub\BoidSimulation\Boid.cpp(197,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\claire.benes\Documents\GitHub\BoidSimulation\Boid.cpp(198,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\claire.benes\Documents\GitHub\BoidSimulation\Boid.cpp(216,13): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+﻿  main.cpp
+C:\Users\claire.benes\Documents\GitHub\BoidSimulation\main.cpp(63,120): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\claire.benes\Documents\GitHub\BoidSimulation\main.cpp(63,88): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\claire.benes\Documents\GitHub\BoidSimulation\main.cpp(63,55): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\claire.benes\Documents\GitHub\BoidSimulation\main.cpp(63,38): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   Raylib Starter Project.vcxproj -> C:\Users\claire.benes\Documents\GitHub\BoidSimulation\x64\Debug\Raylib Starter Project.exe

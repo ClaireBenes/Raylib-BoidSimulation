@@ -8,7 +8,7 @@ class Obstacles;
 class Boid
 {
 public:
-	Boid(float id, float posX, float poY, float rotation, Texture texture, Color color);
+	Boid(float id, float x, float y, float rotation, Texture texture, Color color);
 	~Boid();
 
 	Vector2 Separates(std::vector<Boid*>& other);
@@ -26,6 +26,9 @@ public:
 
 	float DistanceSqrt(const Vector2& a, const Vector2& b);
 	float Clamp(float& angle);
+
+	Vector2 GetPos();
+	float GetSize();
 
 private:
 	//Fish Info

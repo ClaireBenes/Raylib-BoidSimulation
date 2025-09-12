@@ -122,43 +122,57 @@ Vector2 Boid::KeepWithinBorder()
 
 Vector2 Boid::AvoidObstacles(std::vector<Obstacles*>& obstacles)
 {
-	Vector2 newPos = { 0, 0 };
-	float minDist = speed * speed * 0.8;
+	Vector2 avoidance = { 0, 0 };
+	float avoidanceRadius = speed * 0.3;
 
 	for( int i = 0; i < obstacles.size(); i++ )
 	{
-		Vector2 diff = { position.x - obstacles[i]->GetPos().x, position.y - obstacles[i]->GetPos().y };
+		Vector2 obstaclePos = obstacles[i]->GetPos();
+		float obstacleWidth = obstacles[i]->GetWidth();
+		float obstacleHeight = obstacles[i]->GetHeight();
+
+		Vector2 diff = { position.x - obstaclePos.x, position.y - obstaclePos.y };
 
 		float distSqrt = diff.x * diff.x + diff.y * diff.y;
 
-		if( distSqrt  < minDist - obstacles[i]->GetHeight() * 0.5 && distSqrt > FLT_EPSILON )
+		//Diagonal radius
+		float obstacleRadius = sqrtf(( obstacleWidth * 0.5f ) * ( obstacleWidth * 0.5f ) +
+			( obstacleHeight * 0.5f ) * ( obstacleHeight * 0.5f ));
+
+		float safeRadius = avoidanceRadius + obstacleRadius;
+		float safeRadiusSqrt = safeRadius * safeRadius;
+
+		if( distSqrt < safeRadiusSqrt && distSqrt > FLT_EPSILON )
 		{
-			if( position.x < obstacles[i]->GetPos().x - obstacles[i]->GetWidth() * 0.5 )
-			{
-				newPos.x -= 400;
-			}
-			else if( position.x > obstacles[i]->GetPos().x + obstacles[i]->GetWidth() * 0.5 )
-			{
-				newPos.x += 400;
-			}
-			if( position.y < obstacles[i]->GetPos().y - obstacles[i]->GetHeight() * 0.5 )
-			{
-				newPos.y -= 400;
-			}
-			else if( position.y > obstacles[i]->GetPos().y + obstacles[i]->GetHeight() * 0.5 )
-			{
-				newPos.y += 400;
-			}
-		}		
+			// Normalize the direction vector
+			float dist = sqrtf(distSqrt);
+			diff.x /= dist;
+			diff.y /= dist;
+
+			// Compute avoidance strength: stronger the closer you are
+			float strength = ( safeRadius - dist ) / safeRadius;
+
+			// Scale repulsion by strength
+			avoidance.x += diff.x * strength * 5000.0f;
+			avoidance.y += diff.y * strength * 5000.0f;
+		}
 	}
 
-	return newPos;
+	return avoidance;
 }
 
 void Boid::Move(std::vector<Boid*>& other, std::vector<Obstacles*>& obstacles)
 {
-	velocity.x += (Separates(other).x * 0.8 + KeepWithinBorder().x * 0.2 + AvoidObstacles(obstacles).x * 1.5) + Group(other).x + Align(other).x;
-	velocity.y += (Separates(other).y * 0.8 + KeepWithinBorder().y * 0.2 + AvoidObstacles(obstacles).y * 1.5) + Group(other).y + Align(other).y;
+	velocity.x += (Separates(other).x * 0.8 + 
+		KeepWithinBorder().x * 0.2 + 
+		AvoidObstacles(obstacles).x * 1.5) + 
+		Group(other).x + 
+		Align(other).x;
+	velocity.y += (Separates(other).y * 0.8 + 
+		KeepWithinBorder().y * 0.2 + 
+		AvoidObstacles(obstacles).y * 1.5) + 
+		Group(other).y + 
+		Align(other).y;
 
 	Vector2 normVelocity = Normalized(velocity);
 
@@ -221,4 +235,14 @@ float Boid::Clamp(float& angle)
 	while (angle > PI) angle -= 2 * PI;
 	while (angle < -PI) angle += 2 * PI;
 	return angle;
+}
+
+Vector2 Boid::GetPos()
+{
+	return position;
+}
+
+float Boid::GetSize()
+{
+	return size;
 }
