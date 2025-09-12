@@ -4,6 +4,15 @@
 #include <vector>
 
 class Obstacles;
+class Boid;
+
+struct BoidGroup
+{
+	std::vector<Boid*> ourFishes {};
+
+	BoidGroup* predatorGroup = nullptr;
+	BoidGroup* preyGroup = nullptr;
+};
 
 class Boid
 {
@@ -17,8 +26,10 @@ public:
 
 	Vector2 KeepWithinBorder();
 	Vector2 AvoidObstacles(std::vector<Obstacles*>& obstacles);
+	Vector2 AvoidBoid(std::vector<Boid*>& other);
+	Vector2 ChaseBoid(std::vector<Boid*>& other);
 
-	void Move(std::vector<Boid*>& other, std::vector<Obstacles*>& obstacles);
+	void Move(BoidGroup& group, std::vector<Obstacles*>& obstacles);
 	void Draw();
 
 	Vector2 Normalized(Vector2 vec2);

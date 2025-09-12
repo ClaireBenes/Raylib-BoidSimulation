@@ -161,18 +161,100 @@ Vector2 Boid::AvoidObstacles(std::vector<Obstacles*>& obstacles)
 	return avoidance;
 }
 
-void Boid::Move(std::vector<Boid*>& other, std::vector<Obstacles*>& obstacles)
+Vector2 Boid::AvoidBoid(std::vector<Boid*>& other)
 {
-	velocity.x += (Separates(other).x * 0.8 + 
-		KeepWithinBorder().x * 0.2 + 
-		AvoidObstacles(obstacles).x * 1.5) + 
-		Group(other).x + 
-		Align(other).x;
-	velocity.y += (Separates(other).y * 0.8 + 
-		KeepWithinBorder().y * 0.2 + 
-		AvoidObstacles(obstacles).y * 1.5) + 
-		Group(other).y + 
-		Align(other).y;
+	Vector2 avoidance = { 0, 0 };
+	float avoidanceRadius = speed * 0.3;
+
+	for (Boid* fish : other)
+	{
+		Vector2 fishPos = fish->GetPos();
+		float fishSize = fish->GetSize();
+
+		Vector2 diff = { position.x - fishPos.x, position.y - fishPos.y };
+
+		float distSqrt = diff.x * diff.x + diff.y * diff.y;
+
+		float safeRadius = avoidanceRadius + fishSize;
+		float safeRadiusSqrt = safeRadius * safeRadius;
+
+		if (distSqrt < safeRadiusSqrt && distSqrt > FLT_EPSILON)
+		{
+			// Normalize the direction vector
+			float dist = sqrtf(distSqrt);
+			diff.x /= dist;
+			diff.y /= dist;
+
+			// Compute avoidance strength: stronger the closer you are
+			float strength = (safeRadius - dist) / safeRadius;
+
+			// Scale repulsion by strength
+			avoidance.x += diff.x * strength * 5000.0f;
+			avoidance.y += diff.y * strength * 5000.0f;
+		}
+	}
+
+	return avoidance;
+}
+
+Vector2 Boid::ChaseBoid(std::vector<Boid*>& other)
+{
+	Vector2 avoidance = { 0, 0 };
+	float avoidanceRadius = speed * 2.0;
+
+	for (Boid* fish : other)
+	{
+		Vector2 fishPos = fish->GetPos();
+		float fishSize = fish->GetSize();
+
+		Vector2 diff = { position.x - fishPos.x, position.y - fishPos.y };
+
+		float distSqrt = diff.x * diff.x + diff.y * diff.y;
+
+		float safeRadius = avoidanceRadius + fishSize;
+		float safeRadiusSqrt = safeRadius * safeRadius;
+
+		if (distSqrt < safeRadiusSqrt && distSqrt > FLT_EPSILON)
+		{
+			// Normalize the direction vector
+			float dist = sqrtf(distSqrt);
+			diff.x /= dist;
+			diff.y /= dist;
+
+			// Compute avoidance strength: stronger the closer you are
+			float strength = (safeRadius - dist) / safeRadius;
+
+			// Scale repulsion by strength
+			avoidance.x -= diff.x * strength * 500.0f;
+			avoidance.y -= diff.y * strength * 500.0f;
+		}
+	}
+
+	return avoidance;
+}
+
+void Boid::Move(BoidGroup& group, std::vector<Obstacles*>& obstacles)
+{
+	constexpr float RULE_SEPARATION_MULTIPLIER = 0.8f;
+	constexpr float RULE_OBSTACLES_MULTIPLIER = 1.5f;
+	constexpr float RULE_KEEP_WITHIN_BORDER_MULTIPLIER = 0.2f; // 1.5f;
+	constexpr float RULE_FLEE_MULTIPLIER = 0.0f; //0.2f;
+	constexpr float RULE_CHASE_MULTIPLIER = 0.0f; //0.02f;
+
+	velocity.x += (Separates(group.ourFishes).x * RULE_SEPARATION_MULTIPLIER +
+		KeepWithinBorder().x * RULE_KEEP_WITHIN_BORDER_MULTIPLIER + 
+		AvoidObstacles(obstacles).x * RULE_OBSTACLES_MULTIPLIER +
+		AvoidBoid(group.predatorGroup->ourFishes).x * RULE_FLEE_MULTIPLIER +
+		ChaseBoid(group.preyGroup->ourFishes).x * RULE_CHASE_MULTIPLIER) +
+		Group(group.ourFishes).x + 
+		Align(group.ourFishes).x;
+	velocity.y += (Separates(group.ourFishes).y * RULE_SEPARATION_MULTIPLIER +
+		KeepWithinBorder().y * RULE_KEEP_WITHIN_BORDER_MULTIPLIER +
+		AvoidObstacles(obstacles).y * RULE_OBSTACLES_MULTIPLIER +
+		AvoidBoid(group.predatorGroup->ourFishes).y * RULE_FLEE_MULTIPLIER +
+		ChaseBoid(group.preyGroup->ourFishes).y * RULE_CHASE_MULTIPLIER) +
+		Group(group.ourFishes).y + 
+		Align(group.ourFishes).y;
 
 	Vector2 normVelocity = Normalized(velocity);
 

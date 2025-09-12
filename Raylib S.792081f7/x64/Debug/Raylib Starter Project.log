@@ -1,6 +1,20 @@
-﻿  main.cpp
-C:\Users\claire.benes\Documents\GitHub\BoidSimulation\main.cpp(63,120): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\claire.benes\Documents\GitHub\BoidSimulation\main.cpp(63,88): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\claire.benes\Documents\GitHub\BoidSimulation\main.cpp(63,55): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\claire.benes\Documents\GitHub\BoidSimulation\main.cpp(63,38): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  Raylib Starter Project.vcxproj -> C:\Users\claire.benes\Documents\GitHub\BoidSimulation\x64\Debug\Raylib Starter Project.exe
+﻿  Boid.cpp
+C:\Users\Claire\Documents\ARTFX\Year4\Cours\Prog\C++\Raylib-BoidSimulation\Boid.cpp(15,22): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Claire\Documents\ARTFX\Year4\Cours\Prog\C++\Raylib-BoidSimulation\Boid.cpp(16,23): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Claire\Documents\ARTFX\Year4\Cours\Prog\C++\Raylib-BoidSimulation\Boid.cpp(35,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\Claire\Documents\ARTFX\Year4\Cours\Prog\C++\Raylib-BoidSimulation\Boid.cpp(126,24): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\Claire\Documents\ARTFX\Year4\Cours\Prog\C++\Raylib-BoidSimulation\Boid.cpp(167,24): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\Claire\Documents\ARTFX\Year4\Cours\Prog\C++\Raylib-BoidSimulation\Boid.cpp(203,24): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\Claire\Documents\ARTFX\Year4\Cours\Prog\C++\Raylib-BoidSimulation\Boid.cpp(261,18): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\Claire\Documents\ARTFX\Year4\Cours\Prog\C++\Raylib-BoidSimulation\Boid.cpp(277,29): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Claire\Documents\ARTFX\Year4\Cours\Prog\C++\Raylib-BoidSimulation\Boid.cpp(278,29): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Claire\Documents\ARTFX\Year4\Cours\Prog\C++\Raylib-BoidSimulation\Boid.cpp(293,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\Claire\Documents\ARTFX\Year4\Cours\Prog\C++\Raylib-BoidSimulation\Boid.cpp(294,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\Claire\Documents\ARTFX\Year4\Cours\Prog\C++\Raylib-BoidSimulation\Boid.cpp(312,13): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+  main.cpp
+C:\Users\Claire\Documents\ARTFX\Year4\Cours\Prog\C++\Raylib-BoidSimulation\main.cpp(60,120): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Claire\Documents\ARTFX\Year4\Cours\Prog\C++\Raylib-BoidSimulation\main.cpp(60,88): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Claire\Documents\ARTFX\Year4\Cours\Prog\C++\Raylib-BoidSimulation\main.cpp(60,55): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Claire\Documents\ARTFX\Year4\Cours\Prog\C++\Raylib-BoidSimulation\main.cpp(60,38): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  Generating Code...
+  Raylib Starter Project.vcxproj -> C:\Users\Claire\Documents\ARTFX\Year4\Cours\Prog\C++\Raylib-BoidSimulation\x64\Debug\Raylib Starter Project.exe

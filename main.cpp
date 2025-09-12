@@ -4,10 +4,7 @@
 #include "Boid.h"
 #include "Obstacles.h"
 
-std::vector<Boid*> boids;
-std::vector<Boid*> boids2;
-
-std::vector<std::vector<Boid*>> allBoids;
+std::vector<BoidGroup> allBoids;
 std::vector<Obstacles*> allObstacles;
 
 void InitSimulation();
@@ -54,16 +51,35 @@ void InitSimulation()
 
     for( int i = 0; i < 10; i++ )
     {
-        std::vector<Boid*> boidGroup;
+        BoidGroup boidGroup {};
 
         Color color = Color{ (unsigned char) GetRandomValue(0, 255), (unsigned char) GetRandomValue(0, 255), (unsigned char) GetRandomValue(0, 255), 255 };
 
         for( int j = 0; j < 50; j++ )
         {
             Boid* newBoid = new Boid(j, GetRandomValue(100, 1080 - 100), GetRandomValue(100, 720 - 100), GetRandomValue(0, 360), tex, color);
-            boidGroup.push_back(newBoid);
+            boidGroup.ourFishes.push_back(newBoid);
         }
         allBoids.push_back(boidGroup);
+    }
+
+    // Assign predator & prey groups
+    for (int i = 0; i < allBoids.size(); i++)
+    {
+        BoidGroup& group = allBoids[i];
+
+        BoidGroup* nextGroup = nullptr;
+        if (i != allBoids.size() - 1)
+        {
+            nextGroup = &allBoids[i + 1];
+        }
+        else
+        {
+            nextGroup = &allBoids[0];
+        }
+
+        group.predatorGroup = nextGroup;
+        nextGroup->preyGroup = &group;
     }
 }
 
@@ -74,22 +90,22 @@ void Update()
         allObstacles[i]->Update();
     }
 
-    for( int i = 0; i < allBoids.size(); i++ )
+    for( BoidGroup& group : allBoids )
     {
-        for( int j = 0; j < allBoids[i].size(); j++ )
+        for( Boid* fish : group.ourFishes )
         {
-            allBoids[i][j]->Move(allBoids[i], allObstacles);
+            fish->Move( group, allObstacles );
         }
     }
 }
 
 void Draw() 
 {
-    for( int i = 0; i < allBoids.size(); i++ )
+    for (BoidGroup& group : allBoids)
     {
-        for( int j = 0; j < allBoids[i].size(); j++ )
+        for (Boid* fish : group.ourFishes)
         {
-            allBoids[i][j]->Draw();
+            fish->Draw();
         }
     }
 
@@ -101,11 +117,11 @@ void Draw()
 
 void EndScene() 
 {
-    for( int i = 0; i < allBoids.size(); i++ )
+    for (BoidGroup& group : allBoids)
     {
-        for( int j = 0; j < allBoids[i].size(); j++ )
+        for (Boid* fish : group.ourFishes)
         {
-            delete allBoids[i][j];
+            delete fish;
         }
     }
 
