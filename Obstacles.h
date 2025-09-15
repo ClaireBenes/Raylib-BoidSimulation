@@ -10,6 +10,9 @@ public:
 	void Draw();
 	void Update();
 
+	void SetPos(float x,float y);
+	void SetSize(float width, float height);
+
 	Vector2 GetPos();
 	float GetWidth();
 	float GetHeight();

@@ -9,6 +9,10 @@ std::vector<Obstacles*> allObstacles;
 
 float borderSize = 100;
 
+Obstacles* currentObstacle = nullptr;
+Vector2 obstacleStart = { 0, 0 };
+Vector2 obstacleEnd = { 0, 0 };
+
 void InitSimulation();
 void Update();
 void Draw();
@@ -51,7 +55,7 @@ void InitSimulation()
     //Fish
     Texture tex = LoadTexture("resources/WhiteFish.png");
 
-    for( int i = 0; i < 15; i++ )
+    for( int i = 0; i < 10; i++ )
     {
         BoidGroup boidGroup {};
 
@@ -99,6 +103,35 @@ void Update()
             fish->Move( group, allObstacles );
         }
     }
+
+    //Create Obstacles by dragging mouse
+    if( IsMouseButtonPressed(MOUSE_LEFT_BUTTON) )
+    {
+        obstacleStart = { (float) GetMouseX(), (float) GetMouseY() };
+        currentObstacle = new Obstacles(obstacleStart.x, obstacleStart.y, 1, 1, false);
+    }
+
+    if( IsMouseButtonDown(MOUSE_LEFT_BUTTON) && currentObstacle )
+    {
+        Vector2 currentMouse = { (float) GetMouseX(), (float) GetMouseY() };
+
+        float centerX = ( obstacleStart.x + currentMouse.x ) / 2.0f;
+        float centerY = ( obstacleStart.y + currentMouse.y ) / 2.0f;
+
+        float dx = currentMouse.x - obstacleStart.x;
+        float dy = currentMouse.y - obstacleStart.y;
+        float radius = sqrtf(dx * dx + dy * dy) / 2.0f;
+
+
+        currentObstacle->SetPos(centerX, centerY);
+        currentObstacle->SetSize(radius, radius);
+    }
+
+    if( IsMouseButtonReleased(MOUSE_LEFT_BUTTON) && currentObstacle )
+    {
+        allObstacles.push_back(currentObstacle);
+        currentObstacle = nullptr;
+    }
 }
 
 void Draw() 
@@ -115,6 +148,11 @@ void Draw()
     {
         allObstacles[i]->Draw();
     }
+
+    if( currentObstacle )
+    {
+        currentObstacle->Draw();
+    }
 }
 
 void EndScene() 
@@ -126,6 +164,12 @@ void EndScene()
             delete fish;
         }
     }
-
     allBoids.clear();
+
+    for( Obstacles* obstacle : allObstacles )
+    {
+        delete obstacle;
+    }
+
+    allObstacles.clear();
 }

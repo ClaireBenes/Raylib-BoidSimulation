@@ -34,6 +34,18 @@ void Obstacles::Update()
 	}
 }
 
+void Obstacles::SetPos(float x, float y)
+{
+	position.x = x;
+	position.y = y;
+}
+
+void Obstacles::SetSize(float width, float height)
+{
+	this->width = width;
+	this->height = height;
+}
+
 Vector2 Obstacles::GetPos()
 {
 	return position;
