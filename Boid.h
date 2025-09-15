@@ -56,7 +56,8 @@ private:
 	//Boid Info
 	float maxDistance = 40;
 	float maxSteer = 20;
-	float avoidObstacleFactor = 0.4;
+	float avoidObstacleFactor = 0.5;
+	float borderSize = 100;
 
 	//Rules 
 	const float RULE_SEPARATION_MULTIPLIER = 15.9f;

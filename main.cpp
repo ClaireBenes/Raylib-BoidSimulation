@@ -7,6 +7,8 @@
 std::vector<BoidGroup> allBoids;
 std::vector<Obstacles*> allObstacles;
 
+float borderSize = 100;
+
 void InitSimulation();
 void Update();
 void Draw();
@@ -49,15 +51,15 @@ void InitSimulation()
     //Fish
     Texture tex = LoadTexture("resources/WhiteFish.png");
 
-    for( int i = 0; i < 7; i++ )
+    for( int i = 0; i < 15; i++ )
     {
         BoidGroup boidGroup {};
 
         Color color = Color{ (unsigned char) GetRandomValue(0, 255), (unsigned char) GetRandomValue(0, 255), (unsigned char) GetRandomValue(0, 255), 255 };
 
-        for( int j = 0; j < 100; j++ )
+        for( int j = 0; j < 70; j++ )
         {
-            Boid* newBoid = new Boid(j, GetRandomValue(0 + 100, GetRenderWidth() - 200), GetRandomValue(0 + 100, GetRenderHeight() - 200) + 100, GetRandomValue(0, 360), tex, color);
+            Boid* newBoid = new Boid(j, GetRandomValue(0 + borderSize, GetRenderWidth() - borderSize), GetRandomValue(0 + borderSize, GetRenderHeight() - borderSize), GetRandomValue(0, 360), tex, color);
             boidGroup.ourFishes.push_back(newBoid);
         }
         allBoids.push_back(boidGroup);

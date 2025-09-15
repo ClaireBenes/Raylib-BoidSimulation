@@ -71,16 +71,16 @@ Vector2 Boid::KeepWithinBorder()
 {
 	Vector2 newPos = { 0, 0 };
 
-	if (position.x < 0 + 200 ) {
+	if (position.x < 0 + borderSize ) {
 		newPos.x = 10;
 	} 
-	else if (position.x > GetRenderWidth() - 200 ) {
+	else if (position.x > GetRenderWidth() - borderSize ) {
 		newPos.x = -10;
 	}
-	if (position.y > GetRenderHeight() - 200 ) {
+	if (position.y > GetRenderHeight() - borderSize ) {
 		newPos.y = -10;
 	}
-	else if (position.y < 0 + 200) {
+	else if (position.y < 0 + borderSize ) {
 		newPos.y = 10;
 	}
 
