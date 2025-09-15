@@ -21,52 +21,32 @@ Boid::~Boid()
 	UnloadTexture(fishTexture);
 }
 
-Vector2 Boid::Separates(std::vector<Boid*>& other)
+Vector2 Boid::Separates(Boid* otherFish)
 {
 	Vector2 alldistance = { 0,0 };
 
-	for (int i = 0; i < other.size(); i++) 
-	{
-		if (other[i]->id == id) {
-			continue;
-		}
+	Vector2 dist = Distance(otherFish);
+	float distanceSqrt = sqrt(dist.x * dist.x + dist.y * dist.y);
 
-		Vector2 dist = Distance(other[i]);
-		float distanceSqrt = sqrt(dist.x * dist.x + dist.y * dist.y);
-
-		if (distanceSqrt < maxDistance)
-		{ 
-			alldistance.x -= dist.x;
-			alldistance.y -= dist.y;
-		}
+	if (distanceSqrt < maxDistance)
+	{ 
+		alldistance.x -= dist.x;
+		alldistance.y -= dist.y;
 	}
 
 	if ((alldistance.x * alldistance.x + alldistance.y * alldistance.y) > FLT_EPSILON) {
-		Normalized(alldistance);
+		Normalize(alldistance);
 	}
 
 	return alldistance;
 }
 
-Vector2 Boid::Align(std::vector<Boid*>& others)
+Vector2 Boid::Align(Boid* otherFish)
 {
 	Vector2 overallVelocity = { 0, 0 };
-	int count = 0;
 
-	for (int i = 0; i < others.size(); i++)
-	{
-		if ((others[i]->id == id)) {
-			continue;
-		}
-
-		overallVelocity.x += others[i]->velocity.x;
-		overallVelocity.y += others[i]->velocity.y;
-
-		count += 1;
-	}
-
-	overallVelocity.x = overallVelocity.x / count;
-	overallVelocity.y = overallVelocity.y / count;
+	overallVelocity.x += otherFish->velocity.x;
+	overallVelocity.y += otherFish->velocity.y;
 
 	overallVelocity.x = (overallVelocity.x - velocity.x) / 8;
 	overallVelocity.y = (overallVelocity.y - velocity.y) / 8;
@@ -74,25 +54,12 @@ Vector2 Boid::Align(std::vector<Boid*>& others)
 	return overallVelocity;
 }
 
-Vector2 Boid::Group(std::vector<Boid*>& other)
+Vector2 Boid::Group(Boid* otherFish)
 {
 	Vector2 overallPos = { 0, 0 };
-	int count = 0;
 
-	for (int i = 0; i < other.size(); i++) 
-	{
-		if ((other[i]->id == id)) {
-			continue;
-		}
-
-		overallPos.x += other[i]->position.x;
-		overallPos.y += other[i]->position.y;
-
-		count += 1;
-	}
-
-	overallPos.x = overallPos.x / count;
-	overallPos.y = overallPos.y / count;
+	overallPos.x += otherFish->position.x;
+	overallPos.y += otherFish->position.y;
 
 	overallPos.x = (overallPos.x - position.x) / 100;
 	overallPos.y = (overallPos.y - position.y) / 100;
@@ -104,17 +71,17 @@ Vector2 Boid::KeepWithinBorder()
 {
 	Vector2 newPos = { 0, 0 };
 
-	if (position.x < 0 + 100) {
-		newPos.x = 40;
+	if (position.x < 0 + 200 ) {
+		newPos.x = 10;
 	} 
-	else if (position.x > 1080-100) {
-		newPos.x = -40;
+	else if (position.x > GetRenderWidth() - 200 ) {
+		newPos.x = -10;
 	}
-	if (position.y > 720 - 100) {
-		newPos.y = -40;
+	if (position.y > GetRenderHeight() - 200 ) {
+		newPos.y = -10;
 	}
 	else if (position.y < 0 + 200) {
-		newPos.y = 40;
+		newPos.y = 10;
 	}
 
 	return newPos;
@@ -123,7 +90,7 @@ Vector2 Boid::KeepWithinBorder()
 Vector2 Boid::AvoidObstacles(std::vector<Obstacles*>& obstacles)
 {
 	Vector2 avoidance = { 0, 0 };
-	float avoidanceRadius = speed * 0.3;
+	float avoidanceRadius = speed * avoidObstacleFactor;
 
 	for( int i = 0; i < obstacles.size(); i++ )
 	{
@@ -235,28 +202,64 @@ Vector2 Boid::ChaseBoid(std::vector<Boid*>& other)
 
 void Boid::Move(BoidGroup& group, std::vector<Obstacles*>& obstacles)
 {
-	constexpr float RULE_SEPARATION_MULTIPLIER = 0.8f;
-	constexpr float RULE_OBSTACLES_MULTIPLIER = 1.5f;
-	constexpr float RULE_KEEP_WITHIN_BORDER_MULTIPLIER = 0.2f; // 1.5f;
-	constexpr float RULE_FLEE_MULTIPLIER = 0.0f; //0.2f;
-	constexpr float RULE_CHASE_MULTIPLIER = 0.0f; //0.02f;
+	//Rules like Speration, Alignment or Group
+	Vector2 alignmentRule{}, seperationRule{}, borderRule{}, obstaclesRule{}, groupRule{};
 
-	velocity.x += (Separates(group.ourFishes).x * RULE_SEPARATION_MULTIPLIER +
-		KeepWithinBorder().x * RULE_KEEP_WITHIN_BORDER_MULTIPLIER + 
-		AvoidObstacles(obstacles).x * RULE_OBSTACLES_MULTIPLIER +
-		AvoidBoid(group.predatorGroup->ourFishes).x * RULE_FLEE_MULTIPLIER +
-		ChaseBoid(group.preyGroup->ourFishes).x * RULE_CHASE_MULTIPLIER) +
-		Group(group.ourFishes).x + 
-		Align(group.ourFishes).x;
-	velocity.y += (Separates(group.ourFishes).y * RULE_SEPARATION_MULTIPLIER +
-		KeepWithinBorder().y * RULE_KEEP_WITHIN_BORDER_MULTIPLIER +
-		AvoidObstacles(obstacles).y * RULE_OBSTACLES_MULTIPLIER +
-		AvoidBoid(group.predatorGroup->ourFishes).y * RULE_FLEE_MULTIPLIER +
-		ChaseBoid(group.preyGroup->ourFishes).y * RULE_CHASE_MULTIPLIER) +
-		Group(group.ourFishes).y + 
-		Align(group.ourFishes).y;
+	for( Boid* fish : group.ourFishes )
+	{
+		if( ( fish->id == id ) )
+		{
+			continue;
+		}
+		seperationRule.x += Normalize(Separates(fish)).x;
+		seperationRule.y += Normalize(Separates(fish)).y;
 
-	Vector2 normVelocity = Normalized(velocity);
+		borderRule.x += Normalize(KeepWithinBorder()).x;
+		borderRule.y += Normalize(KeepWithinBorder()).y;
+
+		obstaclesRule.x += Normalize(AvoidObstacles(obstacles)).x;
+		obstaclesRule.y += Normalize(AvoidObstacles(obstacles)).y;
+
+		groupRule.x += Normalize(Group(fish)).x;
+		groupRule.y += Normalize(Group(fish)).y;
+
+		Vector2 difference = { fish->position.x - position.x, fish->position.y - position.y };
+		if( Dot(velocity, difference) > 0)
+		{
+			alignmentRule.x += Normalize(Align(fish)).x;
+			alignmentRule.y += Normalize(Align(fish)).y;
+		}
+	}
+
+	//Normalize all rules
+	Normalize(seperationRule);
+	Normalize(borderRule);
+	Normalize(obstaclesRule);
+	Normalize(groupRule);
+	Normalize(alignmentRule);
+
+	//Add Rules to velocity
+	velocity.x += seperationRule.x * RULE_SEPARATION_MULTIPLIER +
+		borderRule.x * RULE_KEEP_WITHIN_BORDER_MULTIPLIER +
+		obstaclesRule.x * RULE_OBSTACLES_MULTIPLIER +
+		groupRule.x * RULE_GROUP_MULTIPLIER +
+		alignmentRule.x * RULE_ALIGNMENT_MULTIPLIER;
+	velocity.y += seperationRule.y * RULE_SEPARATION_MULTIPLIER +
+		borderRule.y * RULE_KEEP_WITHIN_BORDER_MULTIPLIER +
+		obstaclesRule.y * RULE_OBSTACLES_MULTIPLIER +
+		groupRule.y * RULE_GROUP_MULTIPLIER +
+		alignmentRule.y * RULE_ALIGNMENT_MULTIPLIER;
+
+	//Prey and predators rules
+	velocity.x += AvoidBoid(group.predatorGroup->ourFishes).x * RULE_FLEE_MULTIPLIER +
+		ChaseBoid(group.preyGroup->ourFishes).x * RULE_CHASE_MULTIPLIER;
+
+	velocity.y += AvoidBoid(group.predatorGroup->ourFishes).y * RULE_FLEE_MULTIPLIER +
+		ChaseBoid(group.preyGroup->ourFishes).y * RULE_CHASE_MULTIPLIER;
+
+
+	//Velocity based on rotation
+	Vector2 normVelocity = Normalize(velocity);
 
 	float targetRot = atan2(normVelocity.y, normVelocity.x);
 	float angleDiff = targetRot - rotation;
@@ -287,7 +290,7 @@ void Boid::Draw()
 	DrawTexturePro(fishTexture, { 0,0,(float)fishTexture.width, (float)fishTexture.height }, { position.x,position.y, size, size }, { origin,origin }, rotation * RAD2DEG + 180, color);
 }
 
-Vector2 Boid::Normalized(Vector2 vec2)
+Vector2 Boid::Normalize(Vector2 vec2)
 {
 	if (vec2.x == 0 && vec2.y == 0) return { vec2 };
 	float newX = vec2.x / sqrt(vec2.x * vec2.x + vec2.y * vec2.y);
@@ -310,6 +313,12 @@ float Boid::DistanceSqrt(const Vector2& a, const Vector2& b)
 	float dy = a.y - b.y;
 
 	return sqrt(dx * dx + dy * dy);
+}
+
+
+float Boid::Dot(const Vector2& left, const Vector2& right) const
+{
+	return left.x * right.x + left.y * right.y;
 }
 
 float Boid::Clamp(float& angle)

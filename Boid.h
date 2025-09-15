@@ -20,9 +20,9 @@ public:
 	Boid(float id, float x, float y, float rotation, Texture texture, Color color);
 	~Boid();
 
-	Vector2 Separates(std::vector<Boid*>& other);
-	Vector2 Align(std::vector<Boid*>& other);
-	Vector2 Group(std::vector<Boid*>& other);
+	Vector2 Separates(Boid* otherFish);
+	Vector2 Align(Boid* otherFish);
+	Vector2 Group(Boid* otherFish);
 
 	Vector2 KeepWithinBorder();
 	Vector2 AvoidObstacles(std::vector<Obstacles*>& obstacles);
@@ -32,10 +32,10 @@ public:
 	void Move(BoidGroup& group, std::vector<Obstacles*>& obstacles);
 	void Draw();
 
-	Vector2 Normalized(Vector2 vec2);
+	Vector2 Normalize(Vector2 vec2);
 	Vector2 Distance(Boid* boid);
-
 	float DistanceSqrt(const Vector2& a, const Vector2& b);
+	float Dot(const Vector2& left, const Vector2& right) const;
 	float Clamp(float& angle);
 
 	Vector2 GetPos();
@@ -56,5 +56,15 @@ private:
 	//Boid Info
 	float maxDistance = 40;
 	float maxSteer = 20;
+	float avoidObstacleFactor = 0.4;
+
+	//Rules 
+	const float RULE_SEPARATION_MULTIPLIER = 15.9f;
+	const float RULE_OBSTACLES_MULTIPLIER = 20.0f;
+	const float RULE_KEEP_WITHIN_BORDER_MULTIPLIER = 6.8f; // 1.5f;
+	const float RULE_ALIGNMENT_MULTIPLIER = 2.8f;
+	const float RULE_GROUP_MULTIPLIER = 0.5f;
+	const float RULE_FLEE_MULTIPLIER = 0.0f; //0.2f;
+	const float RULE_CHASE_MULTIPLIER = 0.0f; //0.02f;
 };
 
