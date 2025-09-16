@@ -24,5 +24,4 @@ The simulation implements flocking behavior (alignment, cohesion, separation) an
 ---
 
 ## 🎥 Demo Video
-
-[▶️ Watch the demo](https://youtu.be/V1Ai2HDqiWg)
+https://github.com/user-attachments/assets/72b8ed3c-a31f-4b75-ac8d-8ae4e4be54c5
