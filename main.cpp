@@ -57,7 +57,7 @@ void InitSimulation()
 
         for( int j = 0; j < 50; j++ )
         {
-            Boid* newBoid = new Boid(j, GetRandomValue(100, 1080 - 100), GetRandomValue(100, 720 - 100), GetRandomValue(0, 360), tex, color);
+            Boid* newBoid = new Boid(j, GetRandomValue(100, GetRenderWidth() - 100), GetRandomValue(100, GetRenderHeight() - 100), GetRandomValue(0, 360), tex, color);
             boidGroup.ourFishes.push_back(newBoid);
         }
         allBoids.push_back(boidGroup);

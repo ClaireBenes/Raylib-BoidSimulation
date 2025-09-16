@@ -1,4 +1,5 @@
 ﻿  Boid.cpp
+  Obstacles.cpp
 C:\Users\Claire\Documents\ARTFX\Year4\Cours\Prog\C++\Raylib-BoidSimulation\Boid.cpp(15,22): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
 C:\Users\Claire\Documents\ARTFX\Year4\Cours\Prog\C++\Raylib-BoidSimulation\Boid.cpp(16,23): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
 C:\Users\Claire\Documents\ARTFX\Year4\Cours\Prog\C++\Raylib-BoidSimulation\Boid.cpp(35,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
@@ -11,10 +12,19 @@ C:\Users\Claire\Documents\ARTFX\Year4\Cours\Prog\C++\Raylib-BoidSimulation\Boid.
 C:\Users\Claire\Documents\ARTFX\Year4\Cours\Prog\C++\Raylib-BoidSimulation\Boid.cpp(293,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
 C:\Users\Claire\Documents\ARTFX\Year4\Cours\Prog\C++\Raylib-BoidSimulation\Boid.cpp(294,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
 C:\Users\Claire\Documents\ARTFX\Year4\Cours\Prog\C++\Raylib-BoidSimulation\Boid.cpp(312,13): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+C:\Users\Claire\Documents\ARTFX\Year4\Cours\Prog\C++\Raylib-BoidSimulation\Obstacles.cpp(21,34): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Claire\Documents\ARTFX\Year4\Cours\Prog\C++\Raylib-BoidSimulation\Obstacles.cpp(21,22): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Claire\Documents\ARTFX\Year4\Cours\Prog\C++\Raylib-BoidSimulation\Obstacles.cpp(23,39): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Claire\Documents\ARTFX\Year4\Cours\Prog\C++\Raylib-BoidSimulation\Obstacles.cpp(23,27): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Claire\Documents\ARTFX\Year4\Cours\Prog\C++\Raylib-BoidSimulation\Obstacles.cpp(24,39): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Claire\Documents\ARTFX\Year4\Cours\Prog\C++\Raylib-BoidSimulation\Obstacles.cpp(24,27): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Claire\Documents\ARTFX\Year4\Cours\Prog\C++\Raylib-BoidSimulation\Obstacles.cpp(32,25): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Claire\Documents\ARTFX\Year4\Cours\Prog\C++\Raylib-BoidSimulation\Obstacles.cpp(33,28): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   main.cpp
-C:\Users\Claire\Documents\ARTFX\Year4\Cours\Prog\C++\Raylib-BoidSimulation\main.cpp(60,120): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\Claire\Documents\ARTFX\Year4\Cours\Prog\C++\Raylib-BoidSimulation\main.cpp(60,88): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Claire\Documents\ARTFX\Year4\Cours\Prog\C++\Raylib-BoidSimulation\main.cpp(60,146): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Claire\Documents\ARTFX\Year4\Cours\Prog\C++\Raylib-BoidSimulation\main.cpp(60,100): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\Users\Claire\Documents\ARTFX\Year4\Cours\Prog\C++\Raylib-BoidSimulation\main.cpp(60,55): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\Users\Claire\Documents\ARTFX\Year4\Cours\Prog\C++\Raylib-BoidSimulation\main.cpp(60,38): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   Generating Code...
+  LINK : C:\Users\Claire\Documents\ARTFX\Year4\Cours\Prog\C++\Raylib-BoidSimulation\x64\Debug\Raylib Starter Project.exe not found or not built by the last incremental link; performing full link
   Raylib Starter Project.vcxproj -> C:\Users\Claire\Documents\ARTFX\Year4\Cours\Prog\C++\Raylib-BoidSimulation\x64\Debug\Raylib Starter Project.exe

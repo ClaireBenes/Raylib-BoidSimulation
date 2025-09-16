@@ -107,10 +107,10 @@ Vector2 Boid::KeepWithinBorder()
 	if (position.x < 0 + 100) {
 		newPos.x = 40;
 	} 
-	else if (position.x > 1080-100) {
+	else if (position.x > GetRenderWidth() - 100) {
 		newPos.x = -40;
 	}
-	if (position.y > 720 - 100) {
+	if (position.y > GetRenderHeight() - 100) {
 		newPos.y = -40;
 	}
 	else if (position.y < 0 + 200) {
