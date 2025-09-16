@@ -62,10 +62,10 @@ private:
 	//Rules 
 	const float RULE_SEPARATION_MULTIPLIER = 15.9f;
 	const float RULE_OBSTACLES_MULTIPLIER = 20.0f;
-	const float RULE_KEEP_WITHIN_BORDER_MULTIPLIER = 6.8f; // 1.5f;
+	const float RULE_KEEP_WITHIN_BORDER_MULTIPLIER = 6.8f; 
 	const float RULE_ALIGNMENT_MULTIPLIER = 2.8f;
 	const float RULE_GROUP_MULTIPLIER = 0.5f;
-	const float RULE_FLEE_MULTIPLIER = 0.0f; //0.2f;
-	const float RULE_CHASE_MULTIPLIER = 0.0f; //0.02f;
+	const float RULE_FLEE_MULTIPLIER = 0.1f;
+	const float RULE_CHASE_MULTIPLIER = 0.1f; 
 };
 
